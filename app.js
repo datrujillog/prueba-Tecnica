@@ -1,6 +1,6 @@
 console.clear();
 
-const shopify = require('shopify-api-node');
+const shopify = require('shopify-api-node'); 
 
 // Configuración de la conexión con la API de shopify
 
@@ -10,13 +10,11 @@ const config = {
     password: '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'
 };
 
-// Instancia de la conexión con la API de shopify
-const shopifyAPI = new shopify(config);
 
-// Función que retorna la información de los productos
-const getProducts = () => {
+
+function getProducts() {  // Función que obtiene los productos de la API de shopify 
     return new Promise((resolve, reject) => {
-        shopifyAPI.product.list()
+        shopify.product.list()
             .then(products => {
                 resolve(products);
             })
@@ -24,51 +22,22 @@ const getProducts = () => {
                 reject(err);
             });
     });
-};
-
-
-const buildString = (products) => {
-    let string = '';
-    products.forEach(product => {
-        string += `${product.id} - ${product.title} - ${product.created_at.split('T')[0]} - ${product.updated_at.split('T')[0]}\n`;
-    });
-    return string;
-};
-
-
-    // 3. Al API de shopify retorna el valor de “created_at” asi => “2018-04-19T09:34:47-04:00”.
-    // Nosotros solo necesitamos “AAAA-MM-DD”.
-
-function getDate(date) {
-    return date.split('T')[0];
 }
 
 
+function buildString(products) {
+    let string = '';
+    products.forEach(product => {
+        string += `${product.title} - ${product.variants[0].price} \n`;
+    });
+    return string;
+}
 
 
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-//     const getCreatedAt = (date) => {
-//         return new Promise((resolve, reject) => {
-//             resolve(date.split('T')[0]);
-//         });
-// }
-    
-
-
+function getCreatedAt(date) {
+    return new Promise((resolve, reject) => {
+        resolve(date.split('T')[0]);
+        reject(err);
+    });
+}
 
