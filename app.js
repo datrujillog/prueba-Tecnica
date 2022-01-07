@@ -12,7 +12,7 @@ const config = {
 
 
 
-function getProducts() {  // Función que obtiene los productos de la API de shopify 
+function getProducts() { 
     return new Promise((resolve, reject) => {
         shopify.product.list()
             .then(products => {
